@@ -40,6 +40,12 @@ services:
     depends_on:
       - postgres
       - pgAdmin4
+    environment:
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: project
+      DB_HOST: postgres
+      SERVER_PORT: 4000
     ports:
       - 4000:4000
     volumes:
