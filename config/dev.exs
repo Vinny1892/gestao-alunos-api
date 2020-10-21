@@ -4,8 +4,8 @@ use Mix.Config
 config :gestao_alunos, GestaoAlunos.Repo,
   username: "postgres",
   password: "postgres",
-  database: "gestao_alunos_dev",
-  hostname: "localhost",
+  database: "project",
+  hostname: "postgres",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
