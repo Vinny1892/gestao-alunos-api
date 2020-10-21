@@ -22,6 +22,8 @@ defmodule GestaoAlunosWeb.Router do
     scope "/" do
       pipe_through [:fetch_session, :protect_from_forgery]
       live_dashboard "/dashboard", metrics: GestaoAlunosWeb.Telemetry
+      resources "/alunos" , GestaoAlunosWeb.AlunoController , except: [:create , :edit]
+
     end
   end
 end
