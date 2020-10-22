@@ -7,6 +7,7 @@ defmodule GestaoAlunosWeb.Router do
 
   scope "/api", GestaoAlunosWeb do
     pipe_through :api
+    resources "/alunos" , AlunoController , except: [:new ,:edit]
   end
 
   # Enables LiveDashboard only for development
@@ -20,8 +21,10 @@ defmodule GestaoAlunosWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery]
+      pipe_through [:fetch_session]
       live_dashboard "/dashboard", metrics: GestaoAlunosWeb.Telemetry
+
+      #post "/alunos" , GestaoAlunosWeb.AlunoController , :create
     end
   end
 end
