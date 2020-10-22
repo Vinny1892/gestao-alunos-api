@@ -3,9 +3,9 @@ defmodule GestaoAlunosWeb.ErrorView do
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
-  # def render("500.json", _assigns) do
-  #   %{errors: %{detail: "Internal Server Error"}}
-  # end
+  def render("405.json", _assigns) do
+     %{errors: %{detail: "Method Not Allowed"}}
+   end
 
   # By default, Phoenix returns the status message from
   # the template name. For example, "404.json" becomes
@@ -13,4 +13,5 @@ defmodule GestaoAlunosWeb.ErrorView do
   def template_not_found(template, _assigns) do
     %{errors: %{detail: Phoenix.Controller.status_message_from_template(template)}}
   end
+
 end
