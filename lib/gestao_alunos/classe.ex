@@ -7,8 +7,8 @@ defmodule GestaoAlunos.Classe do
 
 
 
-  def list_students do
-    Repo.all(Aluno)
+  def list_students(name, _limit \\ 25 , _pagina \\ 1) do
+    Repo.all(from a in Aluno , where: a.nome == ^name)
   end
 
 

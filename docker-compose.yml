@@ -4,21 +4,16 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.postgres
-    container_name: postgres
     ports:
       - 5432:5432
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-    volumes:
-      - "./postgres/bk:/bk"
-      - "./postgres/data:/var/lib/postgresql/data"
     networks:
       net_postgres:
         ipv4_address: 172.16.18.2
 
   pgAdmin4:
-    container_name: pgAdmin4
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: test@test.postgres.org
