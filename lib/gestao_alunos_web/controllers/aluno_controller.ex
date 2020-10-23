@@ -6,9 +6,21 @@ defmodule GestaoAlunosWeb.AlunoController do
 
    action_fallback GestaoAlunosWeb.FallbackController
 
-   def index(conn, _params) do
-      alunos = Classe.list_students()
-      render(conn, GestaoAlunosWeb.AlunoView, "index.json", alunos: alunos)
+   def index(conn, _conn) do
+      method = String.to_atom(conn.method)
+      case method do
+         :PUT ->
+            conn
+            |> put_status(:method_not_allowed)
+            |> render(GestaoAlunosWeb.ErrorView,"405.json")
+         :DELETE ->
+            conn
+            |> put_status(:method_not_allowed)
+            |> render(GestaoAlunosWeb.ErrorView,"405.json")
+         :GET ->
+            alunos = Classe.list_students("Vincius Espindola")
+            render(conn, GestaoAlunosWeb.AlunoView, "index.json", alunos: alunos)
+      end
    end
 
    def show(conn,  %{"id" => id}) do
@@ -25,4 +37,5 @@ defmodule GestaoAlunosWeb.AlunoController do
          |> render("show.json", aluno: aluno)
        end
     end
+
 end

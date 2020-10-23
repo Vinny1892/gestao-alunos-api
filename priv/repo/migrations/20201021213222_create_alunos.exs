@@ -10,9 +10,7 @@ defmodule GestaoAlunos.Repo.Migrations.CreateAlunos do
       timestamps()
     end
 
-  def down do
-    drop table(:alunos)
-  end
+
 
   end
 end
