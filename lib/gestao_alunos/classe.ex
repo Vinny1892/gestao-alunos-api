@@ -3,14 +3,9 @@ defmodule GestaoAlunos.Classe do
   import Ecto.Query
   alias GestaoAlunos.Repo
 
-
-
-
-
-  def list_students(name, _limit \\ 25 , _pagina \\ 1) do
-    Repo.all(from a in Aluno , where: a.nome == ^name)
+  def list_students(name, _limit \\ 25, _pagina \\ 1) do
+    Repo.all(from a in Aluno, where: a.nome == ^name)
   end
-
 
   def create_student(attrs \\ %{}) do
     %Aluno{}
@@ -18,17 +13,15 @@ defmodule GestaoAlunos.Classe do
     |> Repo.insert()
   end
 
+  def get_student!(id), do: Repo.get!(Aluno, id)
 
-  def get_student!(id) , do: Repo.get!(Aluno,id)
-
-  def update_user(%Aluno{} = aluno, attrs) do
+  def update_student(%Aluno{} = aluno, attrs) do
     aluno
     |> Aluno.changeset(attrs)
     |> Repo.update()
   end
-  def delete_user(%Aluno{} = aluno) do
+
+  def delete_student(%Aluno{} = aluno) do
     Repo.delete(aluno)
   end
-
-
 end

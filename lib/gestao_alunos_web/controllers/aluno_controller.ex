@@ -40,7 +40,16 @@ defmodule GestaoAlunosWeb.AlunoController do
     end
   end
 
-  def update(_conn, params) do
-    IO.inspect(params)
+  def update(conn, params) do
+    id = params["id"]
+    aluno = Classe.get_student!(id)
+
+    with {:ok, %Aluno{} = new_student} <- Classe.update_student(aluno, params) do
+      conn
+      |> put_status(:ok)
+      |> put_resp_header("location", Routes.aluno_path(conn, :show, new_student))
+      |> put_view(GestaoAlunosWeb.AlunoView)
+      |> render("show.json", aluno: new_student)
+    end
   end
 end
