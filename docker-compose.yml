@@ -35,6 +35,7 @@ services:
     depends_on:
       - postgres
       - pgAdmin4
+    command: ["/opt/app/docker/wait-for-it.sh", "postgres", "mix", "phx.server"]
     environment:
       DB_USER: postgres
       DB_PASSWORD: postgres
