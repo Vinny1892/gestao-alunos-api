@@ -1,8 +1,6 @@
 defmodule GestaoAlunosWeb.Router do
   use GestaoAlunosWeb, :router
 
-
-
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -21,16 +19,15 @@ defmodule GestaoAlunosWeb.Router do
   if Mix.env() in [:dev, :test] do
     import Phoenix.LiveDashboard.Router
 
-    scope "/" , GestaoAlunosWeb do
+    scope "/", GestaoAlunosWeb do
       pipe_through [:fetch_session]
       live_dashboard "/dashboard", metrics: GestaoAlunosWeb.Telemetry
-      #rotas erradas
-      post "/alunos" , AlunoController , :create
-      put "/alunos" , AlunoController , :index
-      delete "/alunos" , AlunoController , :index
-      post "/alunos/:id" , AlunoController , :show
-      resources "/alunos" , AlunoController , except: [:new ,:edit]
-
+      # rotas erradas
+      post "/alunos", AlunoController, :create
+      put "/alunos", AlunoController, :index
+      delete "/alunos", AlunoController, :index
+      post "/alunos/:id", AlunoController, :show
+      resources "/alunos", AlunoController, except: [:new, :edit]
     end
   end
 end

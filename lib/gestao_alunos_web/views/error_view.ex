@@ -8,7 +8,11 @@ defmodule GestaoAlunosWeb.ErrorView do
 
   def render("405.json" ,_assigns) do
     %{errors: %{detail: "method not allowed"}}
+   end
+  def render("500.json", _assigns) do
+    %{errors: %{detail: "problem in server contact Bulhoes Diego"}}
   end
+
 
   # By default, Phoenix returns the status message from
   # the template name. For example, "404.json" becomes
