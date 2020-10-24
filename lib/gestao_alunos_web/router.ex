@@ -28,7 +28,7 @@ defmodule GestaoAlunosWeb.Router do
       delete "/alunos", AlunoController, :index
       post "/alunos/:id", AlunoController, :show
       put "/alunos/:id", AlunoController, :update
-      put "/alunos/:id", AlunoController, :update
+      delete "/alunos/:id", AlunoController, :delete
       resources "/alunos", AlunoController, except: [:new, :edit]
     end
   end
