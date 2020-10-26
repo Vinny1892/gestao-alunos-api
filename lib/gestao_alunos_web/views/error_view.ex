@@ -1,5 +1,6 @@
 defmodule GestaoAlunosWeb.ErrorView do
   use GestaoAlunosWeb, :view
+
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
   def render("404.json", _assigns) do
@@ -9,7 +10,13 @@ defmodule GestaoAlunosWeb.ErrorView do
   def render("405.json" ,_assigns) do
     %{errors: %{detail: "method not allowed"}}
    end
-  def render("500.json", _assigns) do
+  def render("500.json",  assigns) do
+    IO.inspect "aqui"
+    seila =  List.first(assigns.stack)
+    {_,_,errors,_} = seila
+    [_,mapErrors] = errors
+    %{changeset: changeset} = mapErrors
+    [error] = changeset.errors
     %{errors: %{detail: "problem in server contact Bulhoes Diego"}}
   end
 

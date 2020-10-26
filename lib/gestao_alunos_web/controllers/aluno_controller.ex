@@ -31,36 +31,21 @@ defmodule GestaoAlunosWeb.AlunoController do
     render(conn, "show.json", aluno: aluno)
   end
 
+
   def create(conn, params) do
-    with {:ok, %Aluno{} = aluno} <- Classe.create_student(params) do
+
+    String.match?("2018.1907.077-8",~r/\d{4}\.\d{4}.\d{3}.\d{1}/)
+      with {:ok, %Aluno{} = aluno} <- Classe.create_student(params)  do
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.aluno_path(conn, :show, aluno))
       |> render("show.json", aluno: aluno)
+      else
+      {:error, %Ecto.Changeset{} = changeset}  -> {:error, changeset}
     end
   end
 
-  def update(conn, params) do
-    id = params["id"]
-    aluno = Classe.get_student!(id)
-
-    with {:ok, %Aluno{} = new_student} <- Classe.update_student(aluno, params) do
-      conn
-      |> put_status(:ok)
-      |> put_resp_header("location", Routes.aluno_path(conn, :show, new_student))
-      |> render("show.json", aluno: new_student)
-    end
-  end
-
-  def delete(conn, params) do
-    id = params["id"]
-    aluno = Classe.get_student!(id)
-
-    with {:ok, %Aluno{} = student} <- Classe.delete_student(aluno) do
-      conn
-      |> put_status(:ok)
-      |> put_resp_header("location", Routes.aluno_path(conn, :show, student))
-      |> render("show.json", aluno: student)
-    end
+  def update(_conn, params) do
+    IO.inspect(params)
   end
 end

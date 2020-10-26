@@ -10,7 +10,7 @@ defmodule GestaoAlunos.Classe do
   def create_student(attrs \\ %{}) do
     %Aluno{}
     |> Aluno.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(returning: true)
   end
 
   def get_student!(id), do: Repo.get!(Aluno, id)

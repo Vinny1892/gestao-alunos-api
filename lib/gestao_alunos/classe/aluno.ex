@@ -17,5 +17,7 @@ defmodule GestaoAlunos.Classe.Aluno do
     aluno
     |> cast(attrs, [:rga, :nome, :curso])
     |> validate_required([:rga, :nome, :curso])
+    |> validate_format(:rga,~r/\d{4}\.\d{4}.\d{3}.\d{1}/)
+    |> unique_constraint(:unique_rga, name: :unique_rga,message: "student already been taken")
   end
 end
