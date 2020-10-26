@@ -34,8 +34,24 @@ defmodule GestaoAlunosWeb.AlunoController do
     end
   end
 
-  def update(_conn, params) do
-    IO.inspect(params)
+  def update(conn,
+  %{"curso"=> curso ,"id" => id , "nome" => nome , "rga"=> rga, "situacao"=> situacao}) do
+    #IO.inspect params
+    new_student = %{
+      "nome" => nome,
+      "curso"=> curso,
+      "rga" => rga,
+      "situacao" => situacao
+    }
+    aluno = Classe.get_student!(String.to_integer(id))
+    IO.inspect(aluno)
+    with {:ok, %Aluno{} = aluno} <- Classe.update_student(aluno,new_student) do
+      conn
+      |> put_status(:ok)
+      |> render("show.json", aluno: aluno)
+    else
+     {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
+    end
   end
 
   def delete(conn, %{"id" => id}) do
@@ -59,7 +75,6 @@ defmodule GestaoAlunosWeb.AlunoController do
       |> put_status(:method_not_allowed)
       |> render(GestaoAlunosWeb.ErrorView, "405.json")
     end
-
     # return true if method not render
     true
   end
