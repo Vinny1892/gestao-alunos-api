@@ -10,14 +10,8 @@ defmodule GestaoAlunosWeb.ErrorView do
   def render("405.json" ,_assigns) do
     %{errors: %{detail: "method not allowed"}}
    end
-  def render("500.json",  assigns) do
-    IO.inspect "aqui"
-    seila =  List.first(assigns.stack)
-    {_,_,errors,_} = seila
-    [_,mapErrors] = errors
-    %{changeset: changeset} = mapErrors
-    [error] = changeset.errors
-    %{errors: %{detail: "problem in server contact Bulhoes Diego"}}
+  def render("500.json",  _assigns) do
+      %{errors: %{detail: "problem in server contact Bulhoes Diego"}}
   end
 
 

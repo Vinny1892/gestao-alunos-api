@@ -11,7 +11,6 @@ defmodule GestaoAlunosWeb.AlunoView do
   end
 
   def render("aluno.json", %{aluno: aluno}) do
-    IO.inspect(aluno)
     %{
       id: aluno.id,
       nome: aluno.nome,
