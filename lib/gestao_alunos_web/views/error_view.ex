@@ -13,7 +13,7 @@ defmodule GestaoAlunosWeb.ErrorView do
   def render("500.json",  _assigns) do
       %{errors: %{detail: "problem in server contact Bulhoes Diego"}}
   end
-  def render("400.json",  assigns) do
+  def render("400.json",  _assigns) do
     %{errors: %{detail: "problem in  format request"}}
 end
 
