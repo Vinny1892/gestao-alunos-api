@@ -6,15 +6,14 @@ defmodule GestaoAlunosWeb.AlunoController do
 
   action_fallback GestaoAlunosWeb.FallbackController
 
-  def index(conn, _params) do
+  def index(conn, params) do
     is_method = String.to_atom(conn.method) |> verify_method(conn, :GET)
-
     if is_method do
-      alunos = Classe.list_students("Vincius Espindola")
-
-      conn
-      |> put_status(:ok)
-      |> render(GestaoAlunosWeb.AlunoView, "index.json", alunos: alunos)
+      Classe.list_students("Vincius Espindola")
+      # conn
+      # |> put_status(:ok)
+      # |> render(GestaoAlunosWeb.AlunoView, "index.json", alunos: alunos)
+      IO.inspect params
     end
   end
 
@@ -31,9 +30,9 @@ defmodule GestaoAlunosWeb.AlunoController do
   end
 
   def create(conn, params) do
-    is_method = String.to_atom(conn.method) |> verify_method(conn, :GET)
-
+    is_method = String.to_atom(conn.method) |> verify_method(conn, :POST)
     if is_method do
+      IO.inspect params
       with {:ok, %Aluno{} = aluno} <- Classe.create_student(params) do
         conn
         |> put_status(:created)
@@ -46,7 +45,7 @@ defmodule GestaoAlunosWeb.AlunoController do
   end
 
   def update(conn, params) do
-    is_method = String.to_atom(conn.method) |> verify_method(conn, :GET)
+    is_method = String.to_atom(conn.method) |> verify_method(conn, :PUT)
 
     if is_method do
       {id, student_params} = Map.pop(params, "id")

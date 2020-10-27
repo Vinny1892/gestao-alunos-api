@@ -15,8 +15,8 @@ defmodule GestaoAlunos.Classe.Aluno do
   @doc false
   def changeset(aluno, attrs) do
     aluno
-    |> cast(attrs, [:rga, :nome, :curso])
-    |> validate_required([:rga, :nome, :curso])
+    |> cast(attrs, [:rga, :nome, :curso,:situacao])
+    |> validate_required([:rga, :nome])
     |> validate_format(:rga,~r/\d{4}\.\d{4}.\d{3}.\d{1}/)
     |> unique_constraint(:unique_rga, name: :unique_rga,message: "student already been taken")
   end
