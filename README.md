@@ -17,5 +17,6 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Forum: https://elixirforum.com/c/phoenix-forum
   * Source: https://github.com/phoenixframework/phoenix
+  
 
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=students-api&uri=https%3A%2F%2Fraw.githubusercontent.com%2FVinny1892%2Fgestao-alunos-api%2Fdeveloper%2Futils%2FInsomnia_2020-10-27)
+<a href="https://insomnia.rest/run/?label=students-api&uri=https%3A%2F%2Fraw.githubusercontent.com%2FVinny1892%2Fgestao-alunos-api%2Fdeveloper%2Futils%2Fdata.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
