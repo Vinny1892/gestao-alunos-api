@@ -2,12 +2,13 @@ defmodule GestaoAlunos.Classe do
   alias GestaoAlunos.Classe.Aluno
   import Ecto.Query
   alias GestaoAlunos.Repo
+  alias GestaoAlunos.Pagination
 
-  def list_students(_name, _limit \\ 25, _pagina \\ 1) do
-    # resp =Ecto.Adapters.SQL.query!(Repo, "SELECT * FROM alunos where nome = $1", ["seila123"])
-    # IO.inspect(resp)
-    #Repo.get_by!(Aluno, nome: name)
-    #Repo.all(from a in Aluno, where: a.nome == ^name)
+  def list_students(nome, page \\ 1, per_page \\ 20) do
+    Aluno
+    |> where(nome: ^nome)
+    |> order_by(desc: :nome)
+    |> Pagination.page(page, per_page: per_page)
   end
 
   def create_student(attrs \\ %{}) do

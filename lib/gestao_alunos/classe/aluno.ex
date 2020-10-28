@@ -6,18 +6,17 @@ defmodule GestaoAlunos.Classe.Aluno do
     field :curso, :string
     field :nome, :string
     field :rga, :string
-    field :situacao , :string
+    field :situacao, :string
 
     timestamps()
   end
 
-
   @doc false
   def changeset(aluno, attrs) do
     aluno
-    |> cast(attrs, [:rga, :nome, :curso,:situacao])
+    |> cast(attrs, [:rga, :nome, :curso, :situacao])
     |> validate_required([:rga, :nome])
-    |> validate_format(:rga,~r/\d{4}\.\d{4}.\d{3}.\d{1}/)
-    |> unique_constraint(:unique_rga, name: :unique_rga,message: "student already been taken")
+    |> validate_format(:rga, ~r/\d{4}\.\d{4}.\d{3}.\d{1}/)
+    |> unique_constraint(:unique_rga, name: :unique_rga, message: "student already been taken")
   end
 end

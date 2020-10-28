@@ -26,9 +26,13 @@ defmodule GestaoAlunosWeb.Router do
       post "/alunos", AlunoController, :create
       put "/alunos", AlunoController, :index
       delete "/alunos", AlunoController, :index
+
       post "/alunos/:id", AlunoController, :show
       put "/alunos/:id", AlunoController, :update
       delete "/alunos/:id", AlunoController, :delete
+
+      get "/alunos/show_page/:nome", AlunoController, :show_page
+
       resources "/alunos", AlunoController, except: [:new, :edit]
     end
   end
