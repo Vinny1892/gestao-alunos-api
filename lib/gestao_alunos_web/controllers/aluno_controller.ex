@@ -6,15 +6,15 @@ defmodule GestaoAlunosWeb.AlunoController do
 
   action_fallback GestaoAlunosWeb.FallbackController
 
-  def index(conn, params) do
+  def index(conn, _params) do
     is_method = String.to_atom(conn.method) |> verify_method(conn, :GET)
     if is_method do
-      Classe.list_students("Vincius Espindola")
-      # conn
-      # |> put_status(:ok)
-      # |> render(GestaoAlunosWeb.AlunoView, "index.json", alunos: alunos)
+      alunos = Classe.list_students("seila")
+      conn
+      |> put_status(:ok)
+      |> put_view(GestaoAlunosWeb.AlunoView)
+      |> render( "index.json", alunos: alunos)
 
-      IO.inspect(params)
     end
   end
 

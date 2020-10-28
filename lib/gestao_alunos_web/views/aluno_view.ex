@@ -3,7 +3,17 @@ defmodule GestaoAlunosWeb.AlunoView do
   alias GestaoAlunosWeb.AlunoView
 
   def render("index.json", %{alunos: alunos}) do
-    %{data: render_many(alunos, AlunoView, "aluno.json")}
+
+    %{
+      data: %{
+        count: alunos.count,
+        has_next: alunos.has_next,
+        has_prev: alunos.has_prev,
+        firts: alunos.first,
+        last: alunos.last,
+        alunos: render_many(alunos.list, AlunoView, "aluno.json")
+      }
+    }
   end
 
   def render("show.json", %{aluno: aluno}) do

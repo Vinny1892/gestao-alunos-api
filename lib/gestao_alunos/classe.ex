@@ -5,10 +5,10 @@ defmodule GestaoAlunos.Classe do
   alias GestaoAlunos.Pagination
 
 
-  def list_students(nome, page \\ 1, per_page \\ 20) do
+  def list_students(_nome \\ "", page \\ 2, per_page \\ 4) do
     Aluno
-    |> where(nome: ^nome)
-    |> order_by(desc: :nome)
+   # |> where(nome: ^nome)
+   # |> order_by(desc: :nome)
     |> Pagination.page(page, per_page: per_page)
   end
 
