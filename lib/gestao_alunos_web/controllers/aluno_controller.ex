@@ -13,7 +13,8 @@ defmodule GestaoAlunosWeb.AlunoController do
       # conn
       # |> put_status(:ok)
       # |> render(GestaoAlunosWeb.AlunoView, "index.json", alunos: alunos)
-      IO.inspect params
+
+      IO.inspect(params)
     end
   end
 
@@ -23,6 +24,7 @@ defmodule GestaoAlunosWeb.AlunoController do
     if Integer.parse(id) === :error,
       do: conn |> put_status(:bad_request) |> render(GestaoAlunosWeb.ErrorView, "400.json")
 
+
     if is_method do
       aluno = Classe.get_student!(id)
       render(conn, "show.json", aluno: aluno)
@@ -31,8 +33,11 @@ defmodule GestaoAlunosWeb.AlunoController do
 
   def create(conn, params) do
     is_method = String.to_atom(conn.method) |> verify_method(conn, :POST)
+
+
     if is_method do
-      IO.inspect params
+      IO.inspect(params)
+
       with {:ok, %Aluno{} = aluno} <- Classe.create_student(params) do
         conn
         |> put_status(:created)
@@ -84,8 +89,13 @@ defmodule GestaoAlunosWeb.AlunoController do
     end
   end
 
+  def show_page(conn, %{"nome" => nome}) do
+    aluno = Classe.list_students(nome)
+    render(conn, GestaoAlunosWeb.AlunoView, "index.json", aluno: aluno)
+  end
+
   defp verify_method(method, conn, right_method)
-       when is_atom(method) and is_atom(right_method) do
+  when is_atom(method) and is_atom(right_method) do
     is_method = method === right_method
 
     unless is_method do
