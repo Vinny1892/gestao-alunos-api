@@ -2,33 +2,34 @@ defmodule GestaoAlunos.Classe do
   alias GestaoAlunos.Classe.Aluno
   import Ecto.Query
   alias GestaoAlunos.Repo
+  alias GestaoAlunos.Pagination
 
-
-
-
-
-  def list_students(name, _limit \\ 25 , _pagina \\ 1) do
-    Repo.all(from a in Aluno , where: a.nome == ^name)
+  def list_students(nome \\ "", page \\ 2, per_page \\ 4) do
+    if nome === nil do
+      Aluno
+      |> Pagination.page(page, per_page: per_page)
+    else
+      Aluno
+      |> where(nome: ^nome)
+      |> Pagination.page(page, per_page: per_page)
+    end
   end
-
 
   def create_student(attrs \\ %{}) do
     %Aluno{}
     |> Aluno.changeset(attrs)
-    |> Repo.insert()
+    |> Repo.insert(returning: true)
   end
 
+  def get_student!(id), do: Repo.get!(Aluno, id)
 
-  def get_student!(id) , do: Repo.get!(Aluno,id)
-
-  def update_user(%Aluno{} = aluno, attrs) do
+  def update_student(%Aluno{} = aluno, attrs) do
     aluno
     |> Aluno.changeset(attrs)
     |> Repo.update()
   end
-  def delete_user(%Aluno{} = aluno) do
+
+  def delete_student(%Aluno{} = aluno) do
     Repo.delete(aluno)
   end
-
-
 end

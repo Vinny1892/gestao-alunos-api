@@ -1,20 +1,24 @@
 defmodule GestaoAlunosWeb.FallbackController do
-  use GestaoAlunosWeb ,:controller
+  use GestaoAlunosWeb, :controller
 
   def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
     conn
     |> put_status(:bad_request)
-    |> render(GestaoAlunosWeb.ChangesetView, "error.json", changeset: changeset)
+    |> put_view(GestaoAlunosWeb.ChangesetView)
+    |> render("error.json", changeset: changeset)
   end
 
-  def call(conn, {:error, :not_found}) do
+  def call(conn, {:error, _assign}) do
     conn
     |> put_status(:not_found)
-    |> render(GestaoAlunosWeb.ErrorView, :"404")
+    |> put_view(GestaoAlunosWeb.ErrorView)
+    |> render("404.json")
   end
 
-
-
-
-
+  def call(conn, _) do
+    conn
+    |> put_status(500)
+    |> put_view(GestaoAlunosWeb.ErrorView)
+    |> render("500.json")
+  end
 end
