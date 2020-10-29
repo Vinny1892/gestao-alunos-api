@@ -2,13 +2,13 @@ defmodule GestaoAlunos.Pagination do
   import Ecto.Query
   alias GestaoAlunos.Repo
 
-  def query(query, page, per_page: per_page) when is_bitstring(page) do
-    query(query, String.to_integer(page), per_page: per_page)
+  def query(query, page, per_page: per_page) when is_bitstring(page) and is_bitstring(per_page) do
+    query(query, String.to_integer(page), per_page: String.to_integer(per_page))
   end
 
   def query(query, page, per_page: per_page) do
     query
-    |> limit(^(per_page ))
+    |> limit(^(per_page + 1))
     |> offset(^(per_page * (page - 1)))
     |> Repo.all()
   end
@@ -22,7 +22,6 @@ defmodule GestaoAlunos.Pagination do
     has_next = length(results) > per_page
     has_prev = page > 1
     count = Repo.one(from(t in subquery(query), select: count("*")))
-    IO.inspect "___________________________SEILA____________________________________________________"
     IO.inspect results
 
     %{
@@ -34,7 +33,7 @@ defmodule GestaoAlunos.Pagination do
       first: (page - 1) * per_page + 1,
       last: Enum.min([page * per_page, count]),
       count: count,
-      list: results
+      list: Enum.slice(results,0,per_page)
     }
   end
 end

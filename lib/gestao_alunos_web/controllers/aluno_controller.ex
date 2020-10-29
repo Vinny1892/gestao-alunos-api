@@ -6,14 +6,32 @@ defmodule GestaoAlunosWeb.AlunoController do
 
   action_fallback GestaoAlunosWeb.FallbackController
 
-  def index(conn, _params) do
+  def index(conn, params) do
     is_method = String.to_atom(conn.method) |> verify_method(conn, :GET)
+    IO.inspect("___________________AQUI________________________________")
     if is_method do
-      alunos = Classe.list_students("seila")
-      conn
-      |> put_status(:ok)
-      |> put_view(GestaoAlunosWeb.AlunoView)
-      |> render( "index.json", alunos: alunos)
+      {name, _} = Map.pop(params, "nome")
+      %{"pagina" => pagina, "limite" => limite} = params
+      if Integer.parse(limite) === :error or Integer.parse(pagina) === :error do
+        conn |> put_status(:bad_request) |> render(GestaoAlunosWeb.ErrorView, "400.json")
+      end
+      limite = String.to_integer(limite)
+      pagina = String.to_integer(pagina)
+      IO.inspect(name)
+      if name === nil do
+        alunos = Classe.list_students(nil,pagina,limite)
+        conn
+        |> put_status(:ok)
+        |> put_view(GestaoAlunosWeb.AlunoView)
+        |> render("index.json", alunos: alunos)
+      else
+        alunos = Classe.list_students(name,pagina,limite)
+        IO.inspect alunos
+        conn
+        |> put_status(:ok)
+        |> put_view(GestaoAlunosWeb.AlunoView)
+        |> render("index.json", alunos: alunos)
+      end
 
     end
   end
@@ -24,7 +42,6 @@ defmodule GestaoAlunosWeb.AlunoController do
     if Integer.parse(id) === :error,
       do: conn |> put_status(:bad_request) |> render(GestaoAlunosWeb.ErrorView, "400.json")
 
-
     if is_method do
       aluno = Classe.get_student!(id)
       render(conn, "show.json", aluno: aluno)
@@ -33,7 +50,6 @@ defmodule GestaoAlunosWeb.AlunoController do
 
   def create(conn, params) do
     is_method = String.to_atom(conn.method) |> verify_method(conn, :POST)
-
 
     if is_method do
       IO.inspect(params)
@@ -95,7 +111,7 @@ defmodule GestaoAlunosWeb.AlunoController do
   end
 
   defp verify_method(method, conn, right_method)
-  when is_atom(method) and is_atom(right_method) do
+       when is_atom(method) and is_atom(right_method) do
     is_method = method === right_method
 
     unless is_method do
