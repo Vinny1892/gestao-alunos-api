@@ -21,22 +21,8 @@ defmodule GestaoAlunosWeb.AlunoController do
 
       limite = String.to_integer(limite)
       pagina = String.to_integer(pagina)
-
-      if name === nil do
-        alunos = Classe.list_students(nil, pagina, limite)
-
-        conn
-        |> put_status(:ok)
-        |> put_view(GestaoAlunosWeb.AlunoView)
-        |> render("index.json", alunos: alunos)
-      else
-        alunos = Classe.list_students(name, pagina, limite)
-
-        conn
-        |> put_status(:ok)
-        |> put_view(GestaoAlunosWeb.AlunoView)
-        |> render("index.json", alunos: alunos)
-      end
+      conn
+      |> find(name,pagina,limite)
     end
   end
 
@@ -134,4 +120,14 @@ defmodule GestaoAlunosWeb.AlunoController do
     # return true if method not render
     true
   end
+
+  defp find(conn,name \\ nil ,pagina,limite) do
+      alunos = Classe.list_students(name, pagina, limite)
+      conn
+      |> put_status(:ok)
+      |> put_view(GestaoAlunosWeb.AlunoView)
+      |> render("index.json", alunos: alunos)
+  end
+
+
 end
