@@ -3,7 +3,6 @@ defmodule GestaoAlunosWeb.AlunoView do
   alias GestaoAlunosWeb.AlunoView
 
   def render("index.json", %{alunos: alunos}) do
-
     %{
       data: %{
         count: alunos.count,

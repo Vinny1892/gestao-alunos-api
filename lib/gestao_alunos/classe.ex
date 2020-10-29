@@ -4,7 +4,6 @@ defmodule GestaoAlunos.Classe do
   alias GestaoAlunos.Repo
   alias GestaoAlunos.Pagination
 
-
   def list_students(nome \\ "", page \\ 2, per_page \\ 4) do
     if nome === nil do
       Aluno
@@ -12,7 +11,7 @@ defmodule GestaoAlunos.Classe do
     else
       Aluno
       |> where(nome: ^nome)
-      |>  Pagination.page(page, per_page: per_page)
+      |> Pagination.page(page, per_page: per_page)
     end
   end
 

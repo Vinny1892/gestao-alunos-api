@@ -8,31 +8,35 @@ defmodule GestaoAlunosWeb.AlunoController do
 
   def index(conn, params) do
     is_method = String.to_atom(conn.method) |> verify_method(conn, :GET)
-    IO.inspect("___________________AQUI________________________________")
+
     if is_method do
       {name, _} = Map.pop(params, "nome")
       %{"pagina" => pagina, "limite" => limite} = params
+
       if Integer.parse(limite) === :error or Integer.parse(pagina) === :error do
-        conn |> put_status(:bad_request) |> render(GestaoAlunosWeb.ErrorView, "400.json")
+        conn
+        |> put_status(:bad_request)
+        |> render(GestaoAlunosWeb.ErrorView, "400.json")
       end
+
       limite = String.to_integer(limite)
       pagina = String.to_integer(pagina)
-      IO.inspect(name)
+
       if name === nil do
-        alunos = Classe.list_students(nil,pagina,limite)
+        alunos = Classe.list_students(nil, pagina, limite)
+
         conn
         |> put_status(:ok)
         |> put_view(GestaoAlunosWeb.AlunoView)
         |> render("index.json", alunos: alunos)
       else
-        alunos = Classe.list_students(name,pagina,limite)
-        IO.inspect alunos
+        alunos = Classe.list_students(name, pagina, limite)
+
         conn
         |> put_status(:ok)
         |> put_view(GestaoAlunosWeb.AlunoView)
         |> render("index.json", alunos: alunos)
       end
-
     end
   end
 
@@ -40,7 +44,10 @@ defmodule GestaoAlunosWeb.AlunoController do
     is_method = String.to_atom(conn.method) |> verify_method(conn, :GET)
 
     if Integer.parse(id) === :error,
-      do: conn |> put_status(:bad_request) |> render(GestaoAlunosWeb.ErrorView, "400.json")
+      do:
+        conn
+        |> put_status(:bad_request)
+        |> render(GestaoAlunosWeb.ErrorView, "400.json")
 
     if is_method do
       aluno = Classe.get_student!(id)
@@ -52,8 +59,6 @@ defmodule GestaoAlunosWeb.AlunoController do
     is_method = String.to_atom(conn.method) |> verify_method(conn, :POST)
 
     if is_method do
-      IO.inspect(params)
-
       with {:ok, %Aluno{} = aluno} <- Classe.create_student(params) do
         conn
         |> put_status(:created)
@@ -72,7 +77,10 @@ defmodule GestaoAlunosWeb.AlunoController do
       {id, student_params} = Map.pop(params, "id")
 
       if Integer.parse(id) === :error,
-        do: conn |> put_status(:bad_request) |> render(GestaoAlunosWeb.ErrorView, "400.json")
+        do:
+          conn
+          |> put_status(:bad_request)
+          |> render(GestaoAlunosWeb.ErrorView, "400.json")
 
       aluno = Classe.get_student!(String.to_integer(id))
 
@@ -91,7 +99,10 @@ defmodule GestaoAlunosWeb.AlunoController do
 
     if is_method do
       if Integer.parse(id) === :error,
-        do: conn |> put_status(:bad_request) |> render(GestaoAlunosWeb.ErrorView, "400.json")
+        do:
+          conn
+          |> put_status(:bad_request)
+          |> render(GestaoAlunosWeb.ErrorView, "400.json")
 
       aluno = Classe.get_student!(id)
 
