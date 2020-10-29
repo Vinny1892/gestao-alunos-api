@@ -30,3 +30,4 @@ gestao_alunos-*.tar
 /priv/static/
 
 postgres
+.env

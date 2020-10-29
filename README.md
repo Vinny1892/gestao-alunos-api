@@ -4,7 +4,7 @@ Repositório criado com o propósito de exemplificar a utilização do Elixir co
 
 <a href="https://insomnia.rest/run/?label=students-api&uri=https%3A%2F%2Fraw.githubusercontent.com%2FVinny1892%2Fgestao-alunos-api%2Fdeveloper%2Futils%2Fdata.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 
-Para inicializar o projeto é possivel atraves do Docker-compose e pelo mix.
+Para inicializar o projeto é possível através do Docker-compose e do mix, ambos os métodos precisam configurar .env, por isso renomeei o arquivo .env.example para .env.
 
 ## Docker-compose
 
@@ -16,7 +16,7 @@ docker-compose up -d
 
 ## Mix
 
-Pelo mix será necessario possuir o Postgres disponivel para a API funcionar.
+Pelo mix será necessário possuir o Postgres disponível para a API funcionar.
 
 Install dependencies with
 

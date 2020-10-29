@@ -6,18 +6,16 @@ services:
       dockerfile: docker/Dockerfile.postgres
     ports:
       - 5432:5432
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+    env_file:
+      - ./.env
     networks:
       net_postgres:
         ipv4_address: 172.16.18.2
 
   pgAdmin4:
     image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: test@test.postgres.org
-      PGADMIN_DEFAULT_PASSWORD: postgres
+    env_file:
+      - ./.env
     depends_on:
       - postgres
     ports:
@@ -36,12 +34,8 @@ services:
       - postgres
       - pgAdmin4
     command: ["/opt/app/docker/wait-for-it.sh", "postgres", "mix", "phx.server"]
-    environment:
-      DB_USER: postgres
-      DB_PASSWORD: postgres
-      DB_NAME: project
-      DB_HOST: postgres
-      SERVER_PORT: 4000
+    env_file:
+      - ./.env
     ports:
       - 4000:4000
     volumes:
