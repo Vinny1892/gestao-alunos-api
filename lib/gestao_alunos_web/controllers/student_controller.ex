@@ -1,8 +1,8 @@
-defmodule GestaoAlunosWeb.AlunoController do
+defmodule GestaoAlunosWeb.StudentController do
   use GestaoAlunosWeb, :controller
 
-  alias GestaoAlunos.Classe
-  alias GestaoAlunos.Classe.Aluno
+  alias GestaoAlunos.Class
+  alias GestaoAlunos.Class.Student
 
   action_fallback GestaoAlunosWeb.FallbackController
 
@@ -19,10 +19,10 @@ defmodule GestaoAlunosWeb.AlunoController do
         |> render(GestaoAlunosWeb.ErrorView, "400.json")
       end
 
-      limite = String.to_integer(limite)
-      pagina = String.to_integer(pagina)
+      limit = String.to_integer(limite)
+      page = String.to_integer(pagina)
       conn
-      |> find(name,pagina,limite)
+      |> find(name,page,limit)
     end
   end
 
@@ -36,8 +36,8 @@ defmodule GestaoAlunosWeb.AlunoController do
         |> render(GestaoAlunosWeb.ErrorView, "400.json")
 
     if is_method do
-      aluno = Classe.get_student!(id)
-      render(conn, "show.json", aluno: aluno)
+      student = Class.get_student!(id)
+      render(conn, "show.json", student: student)
     end
   end
 
@@ -45,11 +45,11 @@ defmodule GestaoAlunosWeb.AlunoController do
     is_method = String.to_atom(conn.method) |> verify_method(conn, :POST)
 
     if is_method do
-      with {:ok, %Aluno{} = aluno} <- Classe.create_student(params) do
+      with {:ok, %Student{} = student} <- Class.create_student(params) do
         conn
         |> put_status(:created)
-        |> put_resp_header("location", Routes.aluno_path(conn, :show, aluno))
-        |> render("show.json", aluno: aluno)
+        |> put_resp_header("location", Routes.student_path(conn, :show, student))
+        |> render("show.json", student: student)
       else
         {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
       end
@@ -68,12 +68,12 @@ defmodule GestaoAlunosWeb.AlunoController do
           |> put_status(:bad_request)
           |> render(GestaoAlunosWeb.ErrorView, "400.json")
 
-      aluno = Classe.get_student!(String.to_integer(id))
+      student = Class.get_student!(String.to_integer(id))
 
-      with {:ok, %Aluno{} = aluno} <- Classe.update_student(aluno, student_params) do
+      with {:ok, %Student{} = student} <- Class.update_student(student, student_params) do
         conn
         |> put_status(:ok)
-        |> render("show.json", aluno: aluno)
+        |> render("show.json", student: student)
       else
         {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
       end
@@ -90,22 +90,19 @@ defmodule GestaoAlunosWeb.AlunoController do
           |> put_status(:bad_request)
           |> render(GestaoAlunosWeb.ErrorView, "400.json")
 
-      aluno = Classe.get_student!(id)
+      student = Class.get_student!(id)
 
-      with {:ok, %Aluno{} = aluno} <- Classe.delete_student(aluno) do
+      with {:ok, %Student{} = student} <- Class.delete_student(student) do
         conn
         |> put_status(:ok)
-        |> render("show.json", aluno: aluno)
+        |> render("show.json", student: student)
       else
         {:error, %Ecto.Changeset{} = changeset} -> {:error, changeset}
       end
     end
   end
 
-  def show_page(conn, %{"nome" => nome}) do
-    aluno = Classe.list_students(nome)
-    render(conn, GestaoAlunosWeb.AlunoView, "index.json", aluno: aluno)
-  end
+
 
   defp verify_method(method, conn, right_method)
        when is_atom(method) and is_atom(right_method) do
@@ -121,12 +118,12 @@ defmodule GestaoAlunosWeb.AlunoController do
     true
   end
 
-  defp find(conn,name \\ nil ,pagina,limite) do
-      alunos = Classe.list_students(name, pagina, limite)
+  defp find(conn,name \\ nil ,page,limit) do
+      student = Class.list_students(name, page, limit)
       conn
       |> put_status(:ok)
-      |> put_view(GestaoAlunosWeb.AlunoView)
-      |> render("index.json", alunos: alunos)
+      |> put_view(GestaoAlunosWeb.StudentView)
+      |> render("index.json", student: student)
   end
 
 
