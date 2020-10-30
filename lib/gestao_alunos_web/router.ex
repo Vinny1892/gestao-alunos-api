@@ -23,17 +23,17 @@ defmodule GestaoAlunosWeb.Router do
       pipe_through [:fetch_session]
       live_dashboard "/dashboard", metrics: GestaoAlunosWeb.Telemetry
       # rotas erradas
-      post "/alunos", AlunoController, :create
-      put "/alunos", AlunoController, :index
-      delete "/alunos", AlunoController, :index
+      post "/alunos", StudentController, :create
+      put "/alunos", StudentController, :index
+      delete "/alunos", StudentController, :index
 
-      post "/alunos/:id", AlunoController, :show
-      put "/alunos/:id", AlunoController, :update
-      delete "/alunos/:id", AlunoController, :delete
+      post "/alunos/:id", StudentController, :show
+      put "/alunos/:id", StudentController, :update
+      delete "/alunos/:id", StudentController, :delete
 
-      get "/alunos/show_page/:nome", AlunoController, :show_page
+      get "/alunos/show_page/:nome", StudentController, :show_page
 
-      resources "/alunos", AlunoController, except: [:new, :edit]
+      resources "/alunos", StudentController, except: [:new, :edit]
     end
   end
 end

@@ -1,4 +1,4 @@
-defmodule GestaoAlunos.Classe.Aluno do
+defmodule GestaoAlunos.Class.Student do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -12,9 +12,8 @@ defmodule GestaoAlunos.Classe.Aluno do
   end
 
   @doc false
-  def changeset(aluno, attrs) do
-    aluno
-
+  def changeset(student, attrs) do
+    student
     |> cast(attrs, [:rga, :nome, :curso, :situacao])
     |> validate_required([:rga, :nome])
     |> validate_format(:rga, ~r/\d{4}\.\d{4}.\d{3}.\d{1}/)
