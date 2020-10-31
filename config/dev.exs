@@ -17,7 +17,7 @@ config :gestao_alunos, GestaoAlunos.Repo,
 # with webpack to recompile .js and .css sources.
 config :gestao_alunos, GestaoAlunosWeb.Endpoint,
   http: [port: 4000],
-  debug_errors: true,
+  debug_errors: false,
   code_reloader: true,
   check_origin: false,
   watchers: []

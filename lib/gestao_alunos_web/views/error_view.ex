@@ -11,7 +11,7 @@ defmodule GestaoAlunosWeb.ErrorView do
     %{errors: %{detail: "method not allowed"}}
    end
   def render("500.json",  _assigns) do
-      %{errors: %{detail: "problem in server contact Bulhoes Diego"}}
+      %{errors: %{detail: "problem in server"}}
   end
   def render("400.json",  _assigns) do
     %{errors: %{detail: "problem in  format request"}}

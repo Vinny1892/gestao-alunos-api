@@ -11,16 +11,16 @@ defmodule GestaoAlunosWeb.StudentController do
 
     if is_method do
       {name, _} = Map.pop(params, "nome")
-      %{"pagina" => pagina, "limite" => limite} = params
+      %{"pagina" => page, "limite" => limit} = params
 
-      if Integer.parse(limite) === :error or Integer.parse(pagina) === :error do
+      if Integer.parse(limit) === :error or Integer.parse(page) === :error do
         conn
         |> put_status(:bad_request)
         |> render(GestaoAlunosWeb.ErrorView, "400.json")
       end
 
-      limit = String.to_integer(limite)
-      page = String.to_integer(pagina)
+      limit = String.to_integer(limit)
+      page = String.to_integer(page)
       conn
       |> find(name,page,limit)
     end
@@ -120,6 +120,12 @@ defmodule GestaoAlunosWeb.StudentController do
 
   defp find(conn,name \\ nil ,page,limit) do
       student = Class.list_students(name, page, limit)
+      IO.inspect student
+      if length(student.list) === 0 do
+        conn
+      |> put_status(:not_found)
+      |> render(GestaoAlunosWeb.ErrorView, "404.json")
+      end
       conn
       |> put_status(:ok)
       |> put_view(GestaoAlunosWeb.StudentView)
