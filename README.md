@@ -2,7 +2,7 @@
 
 Repositório criado com o propósito de exemplificar a utilização do Elixir com a arquitetura RESTful para alunos da UFMS - Universidade Federal de Mato Grosso do Sul
 
-<a href="https://insomnia.rest/run/?label=students-api&uri=https%3A%2F%2Fraw.githubusercontent.com%2FVinny1892%2Fgestao-alunos-api%2Fdeveloper%2Futils%2Fdata.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
+<a href="https://insomnia.rest/run/?label=students-api&uri=https%3A%2F%2Fraw.githubusercontent.com%2FVinny1892%2Fgestao-alunos-api%2Fdeveloper%2Futils%2Ftest.json" target="_blank"><img src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia"></a>
 
 Para inicializar o projeto é possível através do Docker-compose e do mix, ambos os métodos precisam configurar .env, por isso renomeei o arquivo .env.example para .env.
 
